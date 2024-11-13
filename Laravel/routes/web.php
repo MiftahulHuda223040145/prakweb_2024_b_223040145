@@ -5,6 +5,8 @@ use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 
 
 
@@ -30,13 +32,13 @@ Route::get('/contact', function () {
     return view('contact', ['title' => 'Contact']);
 });
 
-Route::get('/login', function () {
-    return view('login', ['title' => 'login']);
-});
+Route::get('/login', [LoginController::class, 'index']);
 
-Route::get('/register', function () {
-    return view('register', ['title' => 'register']);
-});
+Route::get('/register', [RegisterController::class, 'index']);
+
+// Route::post('/register', function () {
+//     return view('register', ['title' => 'register']);
+// });
 
 Route::get('/authors/{user:username}', function(User $user) {
     // $posts = $user->posts->load('category', 'author');
