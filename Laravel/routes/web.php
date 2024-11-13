@@ -30,6 +30,14 @@ Route::get('/contact', function () {
     return view('contact', ['title' => 'Contact']);
 });
 
+Route::get('/login', function () {
+    return view('login', ['title' => 'login']);
+});
+
+Route::get('/register', function () {
+    return view('register', ['title' => 'register']);
+});
+
 Route::get('/authors/{user:username}', function(User $user) {
     // $posts = $user->posts->load('category', 'author');
     return view('posts', ['title' => count($user->posts) . ' Articles by '. $user->name, 'posts' => $user->posts]);
