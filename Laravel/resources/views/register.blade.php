@@ -5,24 +5,52 @@
                 <h2 class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Register</h2>
                 </div>
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form class="space-y-6" action="/register" method="POST">
+            <form class="space-y-6" action="/register" method="post">
                 @csrf
                 <div>
                     <label for="name" class="block text-sm/6 font-medium text-gray-900">Name</label>
                     <div class="mt-2">
-                        <input id="name" name="name" type="text" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+                        <input id="name" name="name" type="text" required value="{{old('name')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 
+                        @error('name')
+                        peer
+                        invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500
+                        @enderror
+                        ">
+                        @error('name')
+                        <p class="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
+                            {{$message}}
+                        </p>
+                        @enderror
                     </div>
                 </div>
                 <div>
                     <label for="username" class="block text-sm/6 font-medium text-gray-900">Username</label>
                     <div class="mt-2">
-                        <input id="username" name="username" type="text" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+                        <input id="username" name="username" type="text" required value="{{old('username')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6 
+                        @error('username')
+                        invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500
+                        @enderror
+                        peer">
+                        @error('username')
+                        <p class="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
+                        {{$message}}
+                        </p>
+                        @enderror
                     </div>
                 </div>
                 <div>
                     <label for="email" class="block text-sm/6 font-medium text-gray-900">Email</label>
                     <div class="mt-2">
-                        <input id="email" name="email" type="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+                        <input id="email" name="email" type="email" placeholder="you@example.com" required value="{{old('email')}}" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  focus:ring-indigo-600 sm:text-sm/6
+                        @error('email')
+                        invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500
+                        @enderror
+                        peer">
+                        @error('email')
+                        <p class="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
+                        {{$message}}
+                        </p>
+                        @enderror
                     </div>
                 </div>
                 <div>
@@ -30,7 +58,16 @@
                     <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
                 </div>
                 <div class="mt-2">
-                    <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+                    <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6
+                    @error('password')
+                    invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 focus:invalid:ring-pink-500
+                    @enderror
+                    peer">
+                    @error('password')
+                    <p class="mt-2 invisible peer-invalid:visible text-pink-600 text-sm">
+                        {{$message}}
+                    </p>
+                    @enderror
                 </div>
                 </div>
         

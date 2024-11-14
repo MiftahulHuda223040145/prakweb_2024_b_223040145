@@ -36,9 +36,7 @@ Route::get('/login', [LoginController::class, 'index']);
 
 Route::get('/register', [RegisterController::class, 'index']);
 
-// Route::post('/register', function () {
-//     return view('register', ['title' => 'register']);
-// });
+Route::post('/register', [RegisterController::class, 'store']);
 
 Route::get('/authors/{user:username}', function(User $user) {
     // $posts = $user->posts->load('category', 'author');
