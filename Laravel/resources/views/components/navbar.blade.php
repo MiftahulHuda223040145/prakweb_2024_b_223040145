@@ -16,12 +16,7 @@
           </div>
         </div>
 
-        <div class="hidden md:block">
-          <div class="ml-10 flex items-baseline space-x-4">
-            <x-nav-link href="/login" :active="request()->is('login')">Login</x-nav-link>
-          </div>
-        </div>
-
+        @auth
         <div class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6">
             <button type="button" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -63,9 +58,12 @@
               x-transition:leave-end="opacity-0 scale-95"
               class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                 <!-- Active: "bg-gray-100", Not Active: "" -->
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+                <a href="/dashboard" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Dashboard</a>
+                <form action="/logout" method="POST">
+                  @csrf
+                  <button type="submit" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Logout</button>
+                </form>
+
               </div>
             </div>
           </div>
@@ -105,15 +103,28 @@
             <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
           </div>
           <div class="ml-3">
-            <div class="text-base font-medium leading-none text-white">Tom Cook</div>
-            <div class="text-sm font-medium leading-none text-gray-400">tom@example.com</div>
+            @auth
+            <div class="text-base font-medium leading-none text-white">{{auth()->user()->name}}</div>
+            <div class="text-sm font-medium leading-none text-gray-400">{{auth()->user()->email}}</div>
+            @endauth
           </div>
         </div>
         <div class="mt-3 space-y-1 px-2">
-          <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your Profile</a>
-          <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Settings</a>
-          <a href="#" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign out</a>
+          <a href="/dashboard" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Dashboard</a>
+          <form action="/logout" method="POST">
+            @csrf
+            <button type="submit" class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Logout</button>
+          </form>
         </div>
       </div>
+
+      @else        
+      <div class="hidden md:block">
+        <div class="ml-10 flex items-baseline space-x-4">
+          <x-nav-link href="/login" :active="request()->is('login')">Login</x-nav-link>
+        </div>
+      </div>
+      @endauth
+
     </div>
   </nav>

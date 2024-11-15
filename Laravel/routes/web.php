@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\DashboardPostController;
 
 
 
@@ -32,11 +33,16 @@ Route::get('/contact', function () {
     return view('contact', ['title' => 'Contact']);
 });
 
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('/register', [RegisterController::class, 'index']);
-
+Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']);
+
+Route::get('/dashboard', function() {
+    return view('dashboard.dashboard', ['title' => 'Welcome back, ']);
+})->middleware('auth');
 
 Route::get('/authors/{user:username}', function(User $user) {
     // $posts = $user->posts->load('category', 'author');
@@ -47,3 +53,9 @@ Route::get('/categories/{category:slug}', function(Category $category) {
     // $posts = $category->posts->load('category', 'author');
     return view('posts', ['title' => count($category->posts) . ' Articles in '. $category->name, 'posts' => $category->posts]);
 });
+
+Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
+
+Route::get('/dashboard/posts/{post:id}', function(Post $post) {
+    return view('dashboard.show', ['title' => '', 'post' => $post]);
+}); 

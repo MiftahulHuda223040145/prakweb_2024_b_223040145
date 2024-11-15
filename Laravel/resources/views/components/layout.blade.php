@@ -18,10 +18,8 @@
   <x-header>{{ $title }}</x-header> 
 
     <main>
-      <div class="mx-auto max-w-7xl pb-10">
         <!-- Your content -->
         {{ $slot }}
-      </div>
     </main>
   </div>
   
