@@ -20,7 +20,7 @@
     <main>
         <!-- Your content -->
         {{ $slot }}
-    </main>
+      </main>
   </div>
   
 </body>

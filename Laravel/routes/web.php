@@ -54,6 +54,8 @@ Route::get('/categories/{category:slug}', function(Category $category) {
     return view('posts', ['title' => count($category->posts) . ' Articles in '. $category->name, 'posts' => $category->posts]);
 });
 
+Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'checkSlug'])->middleware('auth');
+
 Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
 
 Route::get('/dashboard/posts/{post:id}', function(Post $post) {
