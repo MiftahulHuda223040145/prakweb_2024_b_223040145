@@ -58,6 +58,6 @@ Route::get('/dashboard/posts/checkSlug', [DashboardPostController::class, 'check
 
 Route::resource('/dashboard/posts', DashboardPostController::class)->middleware('auth');
 
-Route::get('/dashboard/posts/{post:id}', function(Post $post) {
+Route::get('/dashboard/posts/{post:slug}', function(Post $post) {
     return view('dashboard.show', ['title' => '', 'post' => $post]);
 }); 

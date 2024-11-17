@@ -11,8 +11,12 @@
                                     <h1 class="text-xl font-bold text-gray-900 dark:text-white">{{$post ->category->name}}</h1>
                                     <p class="text-base text-gray-500 dark:text-gray-400 mb-1">{{ $post -> created_at -> diffForHumans()}}</p>
                                     <a href="/dashboard/posts" class="font-medium"><span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Back to my posts</span></a>
-                                    <a href="/dashboard/posts/{{$post->id}}" class="font-medium"><span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Edit</span></a>
-                                    <a href="/dashboard/posts/{{$post->id}}" class="font-medium"><span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Delete</span></a>
+                                    <a href="/dashboard/posts/{{$post->slug}}/edit" class="font-medium"><span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Edit</span></a>
+                                    <form action="/dashboard/posts/{{$post->slug}}" method="POST" class="inline">
+                                        @method('delete')
+                                        @csrf
+                                        <a href="" class="font-medium"><span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2 py-0.5 rounded dark:bg-red-900 dark:text-red-300"><button type="submit" onclick="return confirm('Are You Sure?')">Delete</button></span></a>
+                                    </form>
                                 </div>
                             </div>
                         </address>

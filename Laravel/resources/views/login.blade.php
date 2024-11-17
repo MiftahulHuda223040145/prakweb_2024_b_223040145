@@ -46,7 +46,7 @@
                 <div>
                 <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
                 <div class="mt-2">
-                    <input id="email" name="email" type="email"
+                    <input id="email" name="email" type="email" value="{{ old('email') }}"
                     autocomplete="email" required autofocus class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6
                     @error('email')
                     peer
