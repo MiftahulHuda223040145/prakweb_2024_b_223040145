@@ -43,10 +43,15 @@ class DashboardPostController extends Controller
             'title' => 'required|max:255',
             'slug' => 'required|unique:posts',
             'category_id' => 'required',
+            'image' => 'image|file|max:1024',
             'body' => 'required'
         ]);
-        
-        $allowedTags = '<p><a><strong><b><em><i><ul><li><ol><h1><h2><h3><h4><h5><h6><quote><div><br><del><pre>';
+
+        if($request->file('image')) {
+            $validatedData['image'] = $request->file('image')->store('post-images');
+        }
+
+        $allowedTags = '<p><a><strong><b><em><i><ul><li><ol><h1><quote><div><br><del><pre>';
         $validatedData['author_id'] = auth()->user()->id;
         $validatedData['body'] = strip_tags($request->body, $allowedTags);
 
@@ -95,7 +100,7 @@ class DashboardPostController extends Controller
         }
 
         $validatedData = $request->validate($rules);
-        $allowedTags = '<p><a><strong><b><em><i><ul><li><ol><h1><h2><h3><h4><h5><h6><quote><div><br><del><pre>';
+        $allowedTags = '<p><a><strong><b><em><i><ul><li><ol><h1><quote><div><br><del><pre>';
         $validatedData['author_id'] = auth()->user()->id;
         $validatedData['body'] = strip_tags($request->body, $allowedTags);
 

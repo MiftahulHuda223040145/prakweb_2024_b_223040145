@@ -1,7 +1,7 @@
 <x-dashboard.layout>
     <x-slot:title>{{$title}}</x-slot:title>
     
-    <form class="max-w-sm mx-auto mt-8" method="POST" action="/dashboard/posts">
+    <form class="max-w-sm mx-auto mt-8" method="POST" action="/dashboard/posts" enctype="multipart/form-data">
         @csrf
         <div class="mb-5">
         <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white
@@ -32,7 +32,7 @@
         <p class="mb-5 text-sm text-red-500">{{$message}}</p>
         @enderror
         <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-        <select id="category" name="category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <select id="category" name="category_id" class="mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         @foreach ($categories as $category)
         @if(old('category_id') == $category->id)
         <option value="{{$category->id}}" selected>{{$category->name}}</option>
@@ -40,6 +40,20 @@
         <option value="{{$category->id}}" >{{$category->name}}</option>
         @endforeach
         </select>
+        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-whiteblock mb-2 text-sm font-medium text-gray-900 dark:text-white
+        @error('image')
+            block mb-2 text-sm font-medium text-red-700 dark:text-red-500
+        @enderror
+        ">Upload file</label>
+        <input id="image" name="image" type="file" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+        @error('image')
+        border-red-500 placeholder-red-700 focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500
+        @enderror
+        ">
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 1024KB).</p>
+        @error('image')
+            <p class="mb-5 text-sm text-red-500">{{ $message }}</p>
+        @enderror
         <label for="body" class="block mb-2 mt-5 text-sm font-medium text-gray-900 dark:text-white
         @error('body')
         block mb-2 text-sm font-medium text-red-700 dark:text-red-500
@@ -48,7 +62,7 @@
         @error('body')
             <p class="mb-5 text-sm text-red-500">{{ $message }}</p>
         @enderror
-        <input id="body" type="hidden" name="body">
+        <input id="body" type="hidden" name="body" value="{{ old('body') }}">
         <trix-editor input="body" class="trix-content"></trix-editor>
         </div>
         <div class="flex items-start mb-5">
