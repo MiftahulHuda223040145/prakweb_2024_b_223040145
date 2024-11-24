@@ -1,7 +1,7 @@
 <x-dashboard.layout>
     <x-slot:title>{{$title}}</x-slot:title>
     
-    <form class="max-w-sm mx-auto mt-8" method="POST" action="/dashboard/posts/{{ $post->slug }}">
+    <form class="max-w-sm mx-auto mt-8" method="POST" action="/dashboard/posts/{{ $post->slug }}" enctype="multipart/form-data">
         @method('put')
         @csrf
         <div class="mb-5">
@@ -41,6 +41,26 @@
         <option value="{{$category->id}}" >{{$category->name}}</option>
         @endforeach
         </select>
+        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-whiteblock mb-2 mt-3 text-sm font-medium text-gray-900 dark:text-white
+        @error('image')
+            block mb-2 mt-3 text-sm font-medium text-red-700 dark:text-red-500
+        @enderror
+        ">Upload file</label>
+        <input type="hidden" name="oldImage" value="{{$post->image}}">
+        @if ($post->image)
+        <img src="{{asset('storage/' . $post->image)}}" class="img-preview h-auto max-w-xs rounded-lg mb-3">
+        @else    
+        <img class="img-preview h-auto max-w-xs rounded-lg mb-3">
+        @endif
+        <input id="image" name="image" type="file" onchange="previewImage()" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+        @error('image')
+        border-red-500 placeholder-red-700 focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500
+        @enderror
+        ">
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 1024KB).</p>
+        @error('image')
+            <p class="mb-5 text-sm text-red-500">{{ $message }}</p>
+        @enderror
         <label for="body" class="block mb-2 mt-5 text-sm font-medium text-gray-900 dark:text-white
         @error('body')
         block mb-2 text-sm font-medium text-red-700 dark:text-red-500
@@ -70,6 +90,20 @@
         document.addEventListener('trix-file-accept', function(e) {
             e.preventDefault();
         });
+
+        function previewImage(){ 
+            const image = document.querySelector('#image');
+            const imgPreview = document.querySelector('.img-preview');
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
     </script>
 
 </x-dashboard.layout>

@@ -45,7 +45,8 @@
             block mb-2 text-sm font-medium text-red-700 dark:text-red-500
         @enderror
         ">Upload file</label>
-        <input id="image" name="image" type="file" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+        <img class="img-preview h-auto max-w-xs rounded-lg mb-3">
+        <input id="image" name="image" type="file" onchange="previewImage()" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
         @error('image')
         border-red-500 placeholder-red-700 focus:ring-red-500 dark:bg-gray-700 focus:border-red-500 dark:text-red-500 dark:placeholder-red-500 dark:border-red-500
         @enderror
@@ -83,6 +84,20 @@
         document.addEventListener('trix-file-accept', function(e) {
             e.preventDefault();
         });
+
+        function previewImage(){ 
+            const image = document.querySelector('#image');
+            const imgPreview = document.querySelector('.img-preview');
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+        }
     </script>
 
 </x-dashboard.layout>
